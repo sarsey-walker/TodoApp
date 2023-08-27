@@ -1,7 +1,56 @@
-﻿@page "/todo_list"
+﻿@page "/"
+@using TodoApp.Data;
+@inject NavigationManager NavManager
 
-<h3>TodoList</h3>
+<h3>Todo List</h3>
+
+<ul class="todos">
+
+    @foreach (var item in todos)
+    {
+        <li class="card">
+            <div class="cb-container">
+                <input type="checkbox" class="cb-input" />
+                <span class="check"></span>
+            </div>
+            <p class="item" @onclick="Visualizar">@item.Titulo</p>
+            <button class="clear">
+                <img src="/images/icon_cross.png" alt="Clear it" />
+            </button>
+        </li>
+    }
+</ul>
+
+<div>
+    <button class="btn btn-new-note" @onclick="NovaNota">Nova nota</button>
+</div>
+
 
 @code {
+    private List<Note> todos;
 
+    public TodoList()
+    {
+        todos = new List<Note> { new Note
+        {
+            Titulo = "Titulo 1" ,
+            Descricao = "Descrição 1"
+        },
+        new Note
+        {
+            Titulo = "Titulo 2" ,
+            Descricao = "Descrição item 2"
+        }
+        };
+    }
+
+    void Visualizar()
+    {
+        
+    }
+
+    void NovaNota()
+    {
+        NavManager.NavigateTo("/todo_new");
+    }
 }
