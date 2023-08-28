@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using TodoApp.Data;
+using TodoApp.Repository;
 
 namespace TodoApp;
 
@@ -17,8 +17,12 @@ public static class MauiProgram
 
 		builder.Services.AddMauiBlazorWebView();
 
+        // TODO: Add statements for adding PersonRepository as a singleton
+        string dbPath = FileAccessHelper.GetLocalFilePath("todos.db3");
+        builder.Services.AddSingleton<TodoRepository>(s => ActivatorUtilities.CreateInstance<TodoRepository>(s, dbPath));
+
 #if DEBUG
-		builder.Services.AddBlazorWebViewDeveloperTools();
+        builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
 
