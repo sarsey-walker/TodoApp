@@ -37,7 +37,7 @@
 </ul>
 
 <div>
-    <button class="btn btn-new-note" @onclick="NovaNota">Nova nota</button>
+    <button class="btn pmd-btn-fab pmd-floating-action btn-new-note" type="button" @onclick="NovaNota"><i class="oi oi-plus"></i> </button>
 </div>
 
 
@@ -54,7 +54,7 @@
 
     void Visualizar()
     {
-
+        // visualizar todo/nota
     }
 
     void NovaNota()
@@ -70,7 +70,6 @@
         statusMessage = App.TodoRepo.StatusMessage;
 
         todos = App.TodoRepo.GetAllTodos();
-
     }
 
     void HandleTouchEventStart(TouchEventArgs e)
