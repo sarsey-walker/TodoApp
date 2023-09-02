@@ -26,9 +26,10 @@ input,button {
     background: transparent;
 }
 
-input:focus,button:focus {
-    outline: 0;
-}
+    input:focus, button:focus {
+        outline: 0;
+        outline-width: 0
+    }
 
 button {
     display: flex;

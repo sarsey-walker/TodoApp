@@ -9,6 +9,9 @@ button {
     display: flex;
     user-select: none;
 }
+input:focus{
+    outline: none;
+}
 .card {
     background-color: var(--clr-card-bg);
     display: flex;
