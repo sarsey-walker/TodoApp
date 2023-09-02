@@ -27,6 +27,9 @@ html, body {
     background: var(--clr-page-bg) no-repeat 0% 0% / 100vw 30rem;
 }
 
+h3 {
+    text-align: center;
+}
 h1:focus {
     outline: none;
 }
