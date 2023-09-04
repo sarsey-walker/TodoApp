@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MudBlazor.Services;
 using TodoApp.Repository;
 
 namespace TodoApp;
@@ -16,6 +17,7 @@ public static class MauiProgram
 			});
 
 		builder.Services.AddMauiBlazorWebView();
+		builder.Services.AddMudServices();
 
         // TODO: Add statements for adding PersonRepository as a singleton
         string dbPath = FileAccessHelper.GetLocalFilePath("todos.db3");
