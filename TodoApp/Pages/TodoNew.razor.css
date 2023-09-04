@@ -1,4 +1,9 @@
-﻿input,
+﻿a {
+    text-decoration: none;
+    color: var(--clr-white);
+}
+
+input,
 button {
     font: inherit; /* by default input elements won't inherit font 
                     from its parent */

@@ -27,25 +27,32 @@ html, body {
     background: var(--clr-page-bg) no-repeat 0% 0% / 100vw 30rem;
 }
 
-h3 {
+h1, h2, h3 {
     text-align: center;
 }
 h1:focus {
     outline: none;
 }
+.separator {
+    text-align: right;
+    border-top: 1px solid #fff;
+    overflow: visible;
+}
+
+.separator button {
+    margin-top: -12px;
+    display: block;
+    font-style: italic;
+    background: var(--clr-page-bg);
+    z-index: 10;
+    padding: 2px 20px;
+    float: right;
+}
+
+​
 
 a, .btn-link {
     color: #0071c1;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
-}
-
-.content {
-    padding-top: 1.1rem;
 }
 
 .valid.modified:not([type=checkbox]) {
@@ -107,4 +114,10 @@ a, .btn-link {
     .flex-column, .navbar-brand {
         padding-left: env(safe-area-inset-left);
     }
+}
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1.1rem !important;
 }

@@ -1,0 +1,25 @@
+﻿
+<MudDatePicker @ref="_picker" DateChanged="() => ItemClicked(_picker.Date)" PickerVariant="PickerVariant.Static" DisableToolbar="true" />
+
+
+
+@code {
+    [Parameter] public Action<DateTime?> ItemClicked { get; set; }
+
+    MudDatePicker _picker = new();
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            _picker.GoToDate(DateTime.Today);
+        }
+    }
+   
+
+    private async Task Today()
+    {
+        await _picker.GoToDate(DateTime.Today);
+    }
+
+}

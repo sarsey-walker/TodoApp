@@ -1,17 +1,24 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-   @*  <div class="sidebar">
-        <NavMenu />
-    </div> *@
+<MudThemeProvider IsDarkMode="true" Theme="MyCustomTheme" />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
+<MudLayout >
+    <NavMenu></NavMenu>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
-</div>
+    <MudMainContent Class="page">
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    MudTheme MyCustomTheme = new MudTheme()
+        {
+            PaletteDark = new PaletteDark()
+            {
+                Primary = Colors.Blue.Default
+            },
+    };
+
+}

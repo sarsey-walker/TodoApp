@@ -1,0 +1,34 @@
+﻿@page "/"
+
+<div class="separator">
+    <button type="button" @onclick="TogglePicker">@dataSelecionada.ToString("dd/MM/yyyy")</button>
+</div>
+
+<div hidden="@hidePicker">
+    <MudPaper Class="ma-auto" Outlined="true" Width="50%" MinWidth="328px">
+        <Datepicker ItemClicked="(resultado) => ItemClicked(resultado)"></Datepicker>
+    </MudPaper>
+</div>
+
+
+@* <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" Lines="5" InputType="InputType.Text" /> *@
+
+
+@code {
+    private bool hidePicker = true;
+
+    DateTime dataSelecionada = DateTime.Today;
+
+    // [Parameter]
+    // public EventCallback<DateTime> CheckChanged { get; set; }
+    private void TogglePicker()
+    {
+        hidePicker = !hidePicker;
+    }
+
+    private void ItemClicked(DateTime? data)
+    {
+        dataSelecionada = data.Value;
+        StateHasChanged();
+    }
+}

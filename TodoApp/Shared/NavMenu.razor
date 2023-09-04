@@ -1,28 +1,24 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">TodoApp</a>
-        <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-    </div>
-</div>
+﻿<MudAppBar Color="Color.Dark" Fixed="false" Elevation="1" Dense="true">
+    <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
+    <MudSpacer />
+</MudAppBar>
 
-<div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        @* <div class="nav-item px-3">
-            <NavLink class="nav-link" href="todo_list">
-                <span class="oi oi-list" aria-hidden="true"></span> TODOs
-            </NavLink>
-        </div> *@
-    </nav>
-</div>
+<MudDrawer @bind-Open="@open" ClipMode="DrawerClipMode.Docked" Elevation="1" Variant="@DrawerVariant.Responsive" >
+    <MudNavMenu Color="Color.Primary">
+        <MudNavLink Match="NavLinkMatch.All" Href="/" >Home</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="todo_new">Todo New</MudNavLink>
+        <MudNavLink Match="NavLinkMatch.All" Href="list_todo">Lista de todo</MudNavLink>
+    </MudNavMenu>
+</MudDrawer>
 
 @code {
+    bool open = false;
+
+    void ToggleDrawer()
+    {
+        open = !open;
+    }
+
     private bool collapseNavMenu = true;
 
     private string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
