@@ -19,9 +19,11 @@ public static class MauiProgram
 		builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddMudServices();
 
-        // TODO: Add statements for adding PersonRepository as a singleton
+        // Statements for adding PersonRepository as a singleton
         string dbPath = FileAccessHelper.GetLocalFilePath("todos.db3");
         builder.Services.AddSingleton<TodoRepository>(s => ActivatorUtilities.CreateInstance<TodoRepository>(s, dbPath));
+        dbPath = FileAccessHelper.GetLocalFilePath("Dailynotes.db3");
+        builder.Services.AddSingleton<DailynoteRepositosy>(s => ActivatorUtilities.CreateInstance<DailynoteRepositosy>(s, dbPath));
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();

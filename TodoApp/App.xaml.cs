@@ -4,9 +4,10 @@ namespace TodoApp;
 
 public partial class App : Application
 {
-    // TODO: Add a public static PersonRepository property
+    // Add a public static *Repository property
     public static TodoRepository TodoRepo { get; private set; }
-    public App(TodoRepository repo)
+    public static DailynoteRepositosy _notesRepo { get; private set; }
+    public App(TodoRepository repo, DailynoteRepositosy dailynoteRepositosy)
 	{
 		InitializeComponent();
 
@@ -14,5 +15,6 @@ public partial class App : Application
         // TODO: Initialize the PersonRepository property with the PersonRespository singleton object
 
         TodoRepo = repo;
+        _notesRepo = dailynoteRepositosy;
     }
 }
