@@ -7,7 +7,7 @@
     --img-bg: url("../assets/images/bg-desktop-dark.jpg");
     --clr-primary: hsl(0, 0%, 98%);
     --clr-white: hsl(0, 0%, 100%);
-    --clr-page-bg: hsl(235, 21%, 11%);
+    --clr-page-bg: hsl(235, 21%, 11%); /* mesma cor em hex: #161722;*/
     --clr-card-bg: hsl(235, 24%, 19%);
     --clr-blue: hsl(220, 98%, 61%);
     --clr-green: hsl(192, 100%, 67%);
@@ -19,6 +19,7 @@
     --clr-gb-5: hsl(233, 14%, 35%);
     --clr-gb-6: hsl(235, 19%, 24%);
     --clr-box-shadow: hsl(0, 0%, 0%, 0.1);
+    --mud-typography-body1-family: "NanumMyeongjoBold";
 }
 
 html, body {
@@ -33,12 +34,31 @@ h1, h2, h3 {
 h1:focus {
     outline: none;
 }
+
+input[type=textarea], .mud-input > textarea.mud-input-root {
+    height: calc(100vh - 138px) !important;
+}
+.mud-button-group-filled.mud-button-group-override-styles.mud-button-group-filled-primary .mud-button-root {
+    width: 100%;
+    background: none;
+    border: none !important;
+}
 .separator {
     text-align: right;
     border-top: 1px solid #fff;
     overflow: visible;
 }
+.mud-paper {
+    background-color: var(--clr-page-bg) !important;
+}
+@font-face {
+    font-family: "EBGaramond";
+    src: url('../font/static/EBGaramond-Regular.ttf') format("truetype");
+}
 
+.mud-typography, .mud-typography-body1 {
+    font-family: "EBGaramond";
+}
 .separator button {
     margin-top: -12px;
     display: block;

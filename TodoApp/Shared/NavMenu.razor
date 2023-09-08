@@ -1,4 +1,8 @@
-﻿<MudAppBar Color="Color.Dark" Fixed="false" Elevation="1" Dense="true">
+﻿@using TodoApp.Pages;
+@using TodoApp.Views;
+@inject NavigationManager NavManager
+
+<MudAppBar Color="Color.Dark" Fixed="false" Elevation="1" Dense="true">
     <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleDrawer" />
     <MudSpacer />
 </MudAppBar>
@@ -8,6 +12,7 @@
         <MudNavLink Match="NavLinkMatch.All" Href="/" >Home</MudNavLink>
         <MudNavLink Match="NavLinkMatch.All" Href="todo_new">Todo New</MudNavLink>
         <MudNavLink Match="NavLinkMatch.All" Href="list_todo">Lista de todo</MudNavLink>
+        <MudNavLink @onclick="OnLoginClick" >Login</MudNavLink>
     </MudNavMenu>
 </MudDrawer>
 
@@ -18,6 +23,11 @@
     {
         open = !open;
     }
+    async void OnLoginClick()
+    {
+        await App.Current.MainPage.Navigation.PushAsync(new LoginPage());
+    }
+
 
     private bool collapseNavMenu = true;
 

@@ -1,34 +1,144 @@
 ﻿@page "/"
+@using System.Web;
+@using CommunityToolkit.Maui.Core;
+@using CommunityToolkit.Maui.Views;
+@using TodoApp.Data;
+@using TodoApp.Intefaces;
+@using TodoApp.Views;
+@inject NavigationManager NavManager
+@implements IBackNavigationCancelled
 
 <div class="separator">
     <button type="button" @onclick="TogglePicker">@dataSelecionada.ToString("dd/MM/yyyy")</button>
 </div>
 
 <div hidden="@hidePicker">
-    <MudPaper Class="ma-auto" Outlined="true" Width="50%" MinWidth="328px">
-        <Datepicker ItemClicked="(resultado) => ItemClicked(resultado)"></Datepicker>
-    </MudPaper>
+    <MudContainer Class="d-flex align-center justify-center mud-width-full">
+        <MudPaper Class="ma-auto" Outlined="true" MinWidth="328px" Style="background-color:var(--clr-page-bg)">
+            <Datepicker ItemClicked="(resultado) => ItemClicked(resultado)"></Datepicker>
+        </MudPaper>
+    </MudContainer >
 </div>
 
 
-@* <MudTextField T="string" Label="Outlined" Variant="Variant.Outlined" Lines="5" InputType="InputType.Text" /> *@
-
+@if (string.IsNullOrEmpty(dailyNote.Text))
+{
+    <MudCard @onclick="OnClickCardClick" Style="@heightCard">
+        <MudCardContent>
+            <MudText>No notes</MudText>
+        </MudCardContent>
+    </MudCard>
+}
+else
+{
+    <MudCard @onclick="OnClickCardClick" Style="@heightCard">
+        <MudCardContent>
+            <MudText>
+                @HtmlHelper.RenderMultiline(texto)
+            </MudText>
+        </MudCardContent>
+    </MudCard>
+}
 
 @code {
     private bool hidePicker = true;
 
-    DateTime dataSelecionada = DateTime.Today;
+    private DailyNote dailyNote;
+    private string texto;
+    private string heightCard = "height: calc(100vh - 86px); ";
+    DateTime dataSelecionada;
 
-    // [Parameter]
-    // public EventCallback<DateTime> CheckChanged { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        dataSelecionada = DateTime.Today;
+
+        dailyNote = new();
+        dailyNote.Time = dataSelecionada;
+        App._notesRepo.dailyNote = dailyNote;
+        await ViewNote(dataSelecionada);
+    }
+    
     private void TogglePicker()
     {
+        this.
         hidePicker = !hidePicker;
+
+        if(hidePicker)
+            heightCard = "height: calc(100vh - 86px)";
+        else
+            heightCard = "height: calc(100vh - 392px)";
     }
 
     private void ItemClicked(DateTime? data)
     {
         dataSelecionada = data.Value;
+        App._notesRepo.dailyNote.Time = dataSelecionada;
+        // StateHasChanged();
+        _ = ViewNote(dataSelecionada);
+    }
+
+    async Task ViewNote(DateTime date)
+    {
+        dailyNote = await App._notesRepo.GetNoteAsync(date);
+        if(dailyNote.Id == 0)
+        {
+            dailyNote.Time = date;
+        }
+        texto = dailyNote.Text;
+        App._notesRepo.dailyNote = dailyNote;
         StateHasChanged();
+
+    }
+    private async void OnClickCardClick()
+    {
+        try
+        {
+
+            NavManager.NavigateTo("/notewrite");
+            // await App.Current.MainPage.Navigation.PushAsync(new NoteWrite(dailyNote));
+            // if (retorno != null)
+            // {
+            //     if (dailyNote.Id == 0 && !string.IsNullOrEmpty(retorno.ToString()))
+            //     {
+            //         await App._notesRepo.AddNewEntryAsync(retorno.ToString(), dailyNote.Time);
+            //     }
+            //     else
+            //     {
+            //         if (retorno.ToString() != dailyNote.Text)
+            //         {
+            //             dailyNote.Text = retorno.ToString();
+            //             await App._notesRepo.UpdateNoteAsync(dailyNote);
+            //         }
+            //     }
+            //     _ = ViewNote(dataSelecionada);
+            // }
+        }
+        catch (Exception ex)
+        {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+            string text = "Um erro aconteceu :/ \n" + ex.Message;
+            ToastDuration duration = ToastDuration.Short;
+            double fontSize = 14;
+
+            var toast = CommunityToolkit.Maui.Alerts.Toast.Make(text, duration, fontSize);
+
+            await toast.Show(cancellationTokenSource.Token);
+            
+        }
+
+    }
+
+    public static class HtmlHelper
+    {
+        public static MarkupString RenderMultiline(string textWithLineBreaks)
+        {
+            var encodedLines = (textWithLineBreaks ?? string.Empty)
+                .Split(new char[] { '\r', '\n' })
+                .Select(line => HttpUtility.HtmlEncode(line))
+                .ToArray();
+
+            return (MarkupString)string.Join("<br />", encodedLines);
+        }
     }
 }

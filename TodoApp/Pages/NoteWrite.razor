@@ -1,0 +1,61 @@
+﻿@page "/notewrite"
+@inject NavigationManager NavManager
+
+
+<MudTextField T="string" Variant="Variant.Text" @bind-Text=@texto Lines="10" />
+
+
+<MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
+    <MudButton OnClick="OnClockClicked"><i class="oi oi-clock"></i></MudButton>
+    
+    <MudButton OnClick="OnCheckClicked"> <i class="oi oi-check"></i></MudButton>
+</MudButtonGroup>
+@code {
+
+    private string texto;
+
+    protected override async Task OnInitializedAsync()
+    {
+        FetchData();
+    }
+
+    private async void OnCheckClicked()
+    {
+
+        if (App._notesRepo.dailyNote.Id == 0 && !string.IsNullOrEmpty(texto.Trim()))
+        {
+            await App._notesRepo.AddNewEntryAsync(texto.Trim(), App._notesRepo.dailyNote.Time);
+        }
+        else
+        {
+            if (texto.Trim() != App._notesRepo.dailyNote.Text)
+            {
+                App._notesRepo.dailyNote.Text = texto.Trim();
+                await App._notesRepo.UpdateNoteAsync(App._notesRepo.dailyNote);
+            }
+        }
+        NavManager.NavigateTo("/");
+    }
+
+    private async void OnClockClicked()
+    {
+        // TODO: Colocar hora e minutos aonde o ponteiro está
+
+        CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+
+        string text = "Em breve :)"; 
+        var duration = CommunityToolkit.Maui.Core.ToastDuration.Short;
+        double fontSize = 14;
+
+        var toast = CommunityToolkit.Maui.Alerts.Toast.Make(text, duration, fontSize);
+
+        await toast.Show(cancellationTokenSource.Token);
+    }
+    private void FetchData()
+    {
+        var dailyNote = App._notesRepo.dailyNote;
+
+        texto = dailyNote.Text;
+        StateHasChanged();
+    }
+}
