@@ -1,5 +1,5 @@
 ﻿using CommunityToolkit.Maui;
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using MudBlazor.Services;
 using TodoApp.Repository;
 
@@ -15,13 +15,14 @@ public static class MauiProgram
             // Initialize the .NET MAUI Community Toolkit by adding the below line of code
             .UseMauiCommunityToolkit()
             // After initializing the .NET MAUI Community Toolkit, optionally add additional fonts
-			.ConfigureFonts(fonts =>
-			{
-				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+            .ConfigureFonts(fonts =>
+            {
+                fonts.AddFont("EBGaramond-Regular", "EBGaramond");
+                fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-			});
+            });
 
-		builder.Services.AddMauiBlazorWebView();
+        builder.Services.AddMauiBlazorWebView();
 		builder.Services.AddMudServices();
 
         // Statements for adding PersonRepository as a singleton
