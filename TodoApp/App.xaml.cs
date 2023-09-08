@@ -11,10 +11,22 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new MainPage();
-        // TODO: Initialize the PersonRepository property with the PersonRespository singleton object
+		MainPage = new NavigationPage(new MainPage());
+        // Initialize the PersonRepository property with the PersonRespository singleton object
 
         TodoRepo = repo;
         _notesRepo = dailynoteRepositosy;
+    }
+    protected override Window CreateWindow(IActivationState activationState)
+    {
+        var window = base.CreateWindow(activationState);
+
+        const int newWidth = 400;
+        const int newHeight = 650;
+
+        window.Width = newWidth;
+        window.Height = newHeight;
+
+        return window;
     }
 }
