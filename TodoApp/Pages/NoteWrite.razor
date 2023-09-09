@@ -4,12 +4,12 @@
 
 <MudTextField T="string" Variant="Variant.Text" @bind-Text=@texto Lines="10" id="idtextArea"/>
 
-
 <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
     <MudButton OnClick="OnCloseClicked"><i class="oi oi-x"></i></MudButton>
     <MudButton OnClick="OnClockClicked"> <i class="oi oi-clock"></i></MudButton>
     <MudButton OnClick="OnCheckClicked"> <i class="oi oi-check"></i></MudButton>
 </MudButtonGroup>
+
 @code {
 
     private string texto;
@@ -36,33 +36,10 @@
         }
         NavManager.NavigateTo("/");
     }
-     /*
-     * function setTextToCurrentPos() {
-                var curPos = document.getElementById("text1").selectionStart;
 
-                let x = $("#text1").val();
-                let text_to_insert = $("#insert").val();
-
-                $("#text1").val( x.slice(0, curPos) + text_to_insert + x.slice(curPos));
-    }
-    */
     private async void OnClockClicked()
     {
-        // TODO: Colocar hora e minutos aonde o ponteiro está
-
-        var a = await MyJsInterop.setTextToCurrentPos("idtextArea", DateTime.Now.ToString("HH:mm"));
-        // int X = (int)(await MyJsInterop.GetElementActualLeft("idtextArea"));
-
-
-        // CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-
-        // string text = "Em breve :)"; 
-        // var duration = CommunityToolkit.Maui.Core.ToastDuration.Short;
-        // double fontSize = 14;
-
-        // var toast = CommunityToolkit.Maui.Alerts.Toast.Make(text, duration, fontSize);
-
-        // await toast.Show(cancellationTokenSource.Token);
+        await MyJsInterop.setTextToCurrentPos("idtextArea", DateTime.Now.ToString("HH:mm"));
     }
 
     private void OnCloseClicked()
