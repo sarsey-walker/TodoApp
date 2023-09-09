@@ -16,7 +16,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        FetchData();
+        var dailyNote = App._notesRepo.dailyNote;
+
+        texto = dailyNote.Text;
     }
 
     private async void OnCheckClicked()
