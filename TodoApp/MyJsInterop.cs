@@ -44,9 +44,9 @@ namespace TodoApp
         //        "MyJSFunctions.GetElementActualLeft", elementID);
         //}
 
-        public static ValueTask<bool> setTextToCurrentPos(string elementID, string value)
+        public static ValueTask<string> setTextToCurrentPos(string elementID, string value)
         {
-             return jsRuntime.InvokeAsync<bool>(
+             return jsRuntime.InvokeAsync<string>(
                 "MyJSFunctions.setTextToCurrentPos", elementID, value);
         }
 

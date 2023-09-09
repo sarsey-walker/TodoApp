@@ -47,6 +47,6 @@ window.MyJSFunctions = {
         const textToInsert = obj.value.slice(0, curPos) + ' ' + value + ' ' + obj.value.slice(curPos);
         obj.value = textToInsert;
         setCaretPosition(el, curPos + textToInsert.length)
-        return true;
+        return obj.value;
     }
 }

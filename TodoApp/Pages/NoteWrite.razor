@@ -2,7 +2,7 @@
 @inject NavigationManager NavManager
 
 
-<MudTextField T="string" Variant="Variant.Text" @bind-Text=@texto Lines="10" id="idtextArea"/>
+<MudTextField T="string" Variant="Variant.Text" @bind-Text=@texto Lines="10" id="idtextArea" />
 
 <MudButtonGroup Color="Color.Primary" Variant="Variant.Filled">
     <MudButton OnClick="OnCloseClicked"><i class="oi oi-x"></i></MudButton>
@@ -39,7 +39,7 @@
 
     private async void OnClockClicked()
     {
-        await MyJsInterop.setTextToCurrentPos("idtextArea", DateTime.Now.ToString("HH:mm"));
+        texto = await MyJsInterop.setTextToCurrentPos("idtextArea", DateTime.Now.ToString("HH:mm"));
     }
 
     private void OnCloseClicked()
@@ -52,5 +52,10 @@
 
         texto = dailyNote.Text;
         StateHasChanged();
+    }
+    private Task MethodThatBringText(string value)
+    {
+        texto = value;
+        return Task.CompletedTask;
     }
 }
