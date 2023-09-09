@@ -1,12 +1,10 @@
 ﻿@page "/"
+
 @using System.Web;
-@using CommunityToolkit.Maui.Core;
-@using CommunityToolkit.Maui.Views;
 @using TodoApp.Data;
 @using TodoApp.Intefaces;
 @using TodoApp.Views;
 @inject NavigationManager NavManager
-@implements IBackNavigationCancelled
 
 <div class="separator">
     <button type="button" @onclick="TogglePicker">@dataSelecionada.ToString("dd/MM/yyyy")</button>
@@ -50,11 +48,19 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        dataSelecionada = DateTime.Today;
+        if (App._notesRepo.dailyNote == null)
+        {
+            dataSelecionada = DateTime.Today;
 
-        dailyNote = new();
-        dailyNote.Time = dataSelecionada;
-        App._notesRepo.dailyNote = dailyNote;
+            dailyNote = new();
+            dailyNote.Time = dataSelecionada;
+            App._notesRepo.dailyNote = dailyNote;
+        }
+        else
+        {
+            dailyNote = App._notesRepo.dailyNote;
+            dataSelecionada = dailyNote.Time;
+        }
         await ViewNote(dataSelecionada);
     }
     
@@ -93,40 +99,20 @@ else
     {
         try
         {
-
             NavManager.NavigateTo("/notewrite");
-            // await App.Current.MainPage.Navigation.PushAsync(new NoteWrite(dailyNote));
-            // if (retorno != null)
-            // {
-            //     if (dailyNote.Id == 0 && !string.IsNullOrEmpty(retorno.ToString()))
-            //     {
-            //         await App._notesRepo.AddNewEntryAsync(retorno.ToString(), dailyNote.Time);
-            //     }
-            //     else
-            //     {
-            //         if (retorno.ToString() != dailyNote.Text)
-            //         {
-            //             dailyNote.Text = retorno.ToString();
-            //             await App._notesRepo.UpdateNoteAsync(dailyNote);
-            //         }
-            //     }
-            //     _ = ViewNote(dataSelecionada);
-            // }
         }
         catch (Exception ex)
         {
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
             string text = "Um erro aconteceu :/ \n" + ex.Message;
-            ToastDuration duration = ToastDuration.Short;
+            var duration = CommunityToolkit.Maui.Core.ToastDuration.Short;
             double fontSize = 14;
 
             var toast = CommunityToolkit.Maui.Alerts.Toast.Make(text, duration, fontSize);
 
-            await toast.Show(cancellationTokenSource.Token);
-            
+            await toast.Show(cancellationTokenSource.Token);            
         }
-
     }
 
     public static class HtmlHelper
