@@ -2,7 +2,13 @@
 
 Um aplicativo de "To do" simples feito com MAUI Blazor  (.NET 8 preview 7)
 
-Pretendo evoluir para um aplicativo de anotações
+Estou evoluindo ele para para um aplicativo de anotações
+
+# Roadmap
+
+- [ ] Finalizar UI
+- [ ] Corrigir bug de quando minimiza
+- [ ] Refatorar
 
 # MIT License
 
