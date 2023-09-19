@@ -1,15 +1,18 @@
-﻿
+﻿﻿
 ul {
     list-style: none;
-    padding-left:0;
+    padding-left: 0;
 }
+
 p {
     margin-top: 0;
     margin-bottom: 0;
 }
+
 img {
     user-select: none;
 }
+
 .card {
     background-color: var(--clr-card-bg);
     display: flex;
@@ -20,7 +23,8 @@ img {
     flex-wrap: nowrap;
     justify-content: flex-start;
 }
-input,button {
+
+input, button {
     font: inherit; /* by default input elements won't inherit font from its parent */
     border: 0;
     background: transparent;
@@ -51,18 +55,19 @@ button {
     transition: background 0.3s ease;
 }
 
-/* define some states */
-.add .cb-container:hover {
-    background: var(--clr-blue);
-}
+    /* define some states */
+    .add .cb-container:hover {
+        background: var(--clr-blue);
+    }
 
-.add .cb-container:active {
-    transform: scale(0.95);
-}
+    .add .cb-container:active {
+        transform: scale(0.95);
+    }
 
-.add .cb-container:hover #add-btn {
-    color: var(--clr-white);
-}
+    .add .cb-container:hover #add-btn {
+        color: var(--clr-white);
+    }
+
 .card .cb-container {
     width: 2.5rem;
     height: 2.5rem;
@@ -73,33 +78,40 @@ button {
     justify-content: center;
     position: relative;
 }
-.card .cb-container .cb-input {
-    transform: scale(1.8);
-    opacity: 0;
-}
-.card .cb-container .check {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    pointer-events: none;
-    border-radius: inherit;
-}
-.card .cb-container .cb-input:checked + .check {
-    background: url("/images/icon-check.svg"), linear-gradient(45deg, var(--clr-green), var(--clr-pink));
-    background-repeat: no-repeat;
-    background-position: center;
-}
+
+    .card .cb-container .cb-input {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+
+    .card .cb-container .check {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        pointer-events: none;
+        border-radius: inherit;
+    }
+
+    .card .cb-container .cb-input:checked + .check {
+        background: url("/images/icon-check.svg"), linear-gradient(45deg, var(--clr-green), var(--clr-pink));
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
 .todos .card:first-child {
     border-radius: 0.5rem 0.5rem 0 0;
 }
+
 .todos > * + * {
     border-top: 0.2rem solid var(--clr-gb-6);
 }
+
 .item {
     flex: 1; /* item needs to be stretched */
 }
+
 .btn-new-note {
     background-color: aliceblue;
     color: aliceblue;
@@ -113,7 +125,8 @@ button {
     height: 56px;
     padding: 0;
 }
-.btn-new-note > i.oi {
-    margin: auto;
-    color:blue;
-}
+
+    .btn-new-note > i.oi {
+        margin: auto;
+        color: blue;
+    }

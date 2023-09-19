@@ -63,7 +63,7 @@ namespace TodoApp.Repository
                 StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
             }
 
-            return await Task.FromResult( new List<DailyNote>());
+            return await Task.FromResult(new List<DailyNote>());
         }
 
         public async Task<DailyNote> GetNoteAsync(DateTime date)
@@ -71,8 +71,8 @@ namespace TodoApp.Repository
             try
             {
                 Init();
-                var notes =  await _conn.QueryAsync<DailyNote>("SELECT * FROM DailyNote WHERE TIME = ?", date);
-                if(notes.Any())
+                var notes = await _conn.QueryAsync<DailyNote>("SELECT * FROM DailyNote WHERE TIME = ?", date);
+                if (notes.Any())
                     return notes.FirstOrDefault();
                 return new DailyNote();
             }
@@ -143,4 +143,3 @@ namespace TodoApp.Repository
 
     }
 }
-
