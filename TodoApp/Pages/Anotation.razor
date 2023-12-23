@@ -4,18 +4,21 @@
 @using TodoApp.Data;
 @using TodoApp.Intefaces;
 @using TodoApp.Views;
+
 @inject NavigationManager NavManager
 
 <div class="separator">
-    <button type="button" @onclick="TogglePicker">@dataSelecionada.ToString("dd/MM/yyyy")</button>
+    <button type="button" @onclick="TogglePicker">@dataSelecionada?.ToString("dd/MM/yyyy")</button>
 </div>
 
 <div hidden="@hidePicker">
-    <MudContainer Class="d-flex align-center justify-center mud-width-full">
-        <MudPaper Class="ma-auto" Outlined="true" MinWidth="328px" Style="background-color:var(--clr-page-bg)">
-            <Datepicker ItemClicked="(resultado) => ItemClicked(resultado)"></Datepicker>
-        </MudPaper>
-    </MudContainer >
+
+    <WDatePicker Title="Select a date"
+                 @bind-Date="@dataSelecionada"
+                 MonthChanged="@((DateTime? date) => {newMonth = date.Value; dias = new List<DateTime>(){new DateTime(date.Value.Year,date.Value.Month, random.Next(1, 30))};})"
+                 MarkedDays="@dias"
+                 DateFormat="dd/MM/yyyy"/>
+
 </div>
 
 
@@ -44,7 +47,14 @@ else
     private DailyNote dailyNote;
     private string texto;
     private string heightCard = "height: calc(100vh - 86px); ";
-    DateTime dataSelecionada;
+    DateTime? dataSelecionada;
+    
+
+    private DateTime _value;
+    private DateTime newMonth;
+    private List<DateTime> dias;
+
+    private Random random = new Random();
 
     protected override async Task OnInitializedAsync()
     {
@@ -53,7 +63,7 @@ else
             dataSelecionada = DateTime.Today;
 
             dailyNote = new();
-            dailyNote.Time = dataSelecionada;
+            dailyNote.Time = dataSelecionada.Value;
             App._notesRepo.dailyNote = dailyNote;
         }
         else
@@ -62,9 +72,9 @@ else
             dataSelecionada = dailyNote.Time;
         }
         heightCard = "height: calc(100vh - 86px); ";
-        await ViewNote(dataSelecionada);
+        await ViewNote(dataSelecionada.Value);
     }
-    
+
     private void TogglePicker()
     {
         this.
@@ -78,9 +88,10 @@ else
 
     private void ItemClicked(DateTime? data)
     {
+        Console.WriteLine("Passou aqui");
         dataSelecionada = data.Value;
-        App._notesRepo.dailyNote.Time = dataSelecionada;
-        _ = ViewNote(dataSelecionada);
+        App._notesRepo.dailyNote.Time = dataSelecionada.Value;
+        _ = ViewNote(dataSelecionada.Value);
     }
 
     async Task ViewNote(DateTime date)
