@@ -1,6 +1,7 @@
 ﻿@page "/"
 
 @using System.Web;
+@using System.Diagnostics
 @using TodoApp.Data;
 @using TodoApp.Intefaces;
 @using TodoApp.Views;
@@ -14,10 +15,10 @@
 <div hidden="@hidePicker">
 
     <WDatePicker Title="Select a date"
-                 @bind-Date="@dataSelecionada"
+                 DateChanged="(data) => ItemClicked(data)"
                  MonthChanged="@((DateTime? date) => {newMonth = date.Value; dias = new List<DateTime>(){new DateTime(date.Value.Year,date.Value.Month, random.Next(1, 30))};})"
                  MarkedDays="@dias"
-                 DateFormat="dd/MM/yyyy"/>
+                 DateFormat="dd/MM/yyyy" />
 
 </div>
 
@@ -48,9 +49,7 @@ else
     private string texto;
     private string heightCard = "height: calc(100vh - 86px); ";
     DateTime? dataSelecionada;
-    
 
-    private DateTime _value;
     private DateTime newMonth;
     private List<DateTime> dias;
 
@@ -77,10 +76,9 @@ else
 
     private void TogglePicker()
     {
-        this.
-        hidePicker = !hidePicker;
+        this.hidePicker = !hidePicker;
 
-        if(hidePicker)
+        if (hidePicker)
             heightCard = "height: calc(100vh - 86px)";
         else
             heightCard = "height: calc(100vh - 392px)";
@@ -88,7 +86,7 @@ else
 
     private void ItemClicked(DateTime? data)
     {
-        Console.WriteLine("Passou aqui");
+        Debug.WriteLine("Passou aqui");
         dataSelecionada = data.Value;
         App._notesRepo.dailyNote.Time = dataSelecionada.Value;
         _ = ViewNote(dataSelecionada.Value);
@@ -97,7 +95,7 @@ else
     async Task ViewNote(DateTime date)
     {
         dailyNote = await App._notesRepo.GetNoteAsync(date);
-        if(dailyNote.Id == 0)
+        if (dailyNote.Id == 0)
         {
             dailyNote.Time = date;
         }
@@ -122,7 +120,7 @@ else
 
             var toast = CommunityToolkit.Maui.Alerts.Toast.Make(text, duration, fontSize);
 
-            await toast.Show(cancellationTokenSource.Token);            
+            await toast.Show(cancellationTokenSource.Token);
         }
     }
 

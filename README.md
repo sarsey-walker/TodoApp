@@ -1,8 +1,8 @@
 # TodoApp
 
-Um aplicativo de "To do" simples feito com MAUI Blazor  (.NET 8 preview 7)
+Um aplicativo de "To do" simples feito com MAUI Blazor .NET 8 
 
-Estou evoluindo ele para para um aplicativo de anotações
+Estou evoluindo ele para para um aplicativo de anotações/diário.
 
 # Roadmap
 
