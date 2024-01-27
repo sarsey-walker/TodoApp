@@ -23,31 +23,36 @@
 </div>
 
 
-@if (string.IsNullOrEmpty(dailyNote.Text))
-{
-    <MudCard @onclick="OnClickCardClick" Style="@heightCard">
-        <MudCardContent>
-            <MudText>No notes</MudText>
-        </MudCardContent>
-    </MudCard>
-}
-else
-{
-    <MudCard @onclick="OnClickCardClick" Style="@heightCard">
-        <MudCardContent>
-            <MudText>
-                @HtmlHelper.RenderMultiline(texto)
-            </MudText>
-        </MudCardContent>
-    </MudCard>
-}
+<div style="background-image: url('images/bg-text.svg');
+    /* background-image: linear-gradient(#6f6f6f 1px, transparent 1px); */
+    background-size: 3px 24px;">
+    @if (string.IsNullOrEmpty(dailyNote.Text))
+    {
+        <MudCard @onclick="OnClickCardClick" Style="@heightCard">
+            <MudCardContent>
+                <MudText>No notes</MudText>
+            </MudCardContent>
+        </MudCard>
+    }
+    else
+    {
+
+        <MudCard @onclick="OnClickCardClick" Style="@heightCard">
+            <MudCardContent>
+                <MudText>
+                    @HtmlHelper.RenderMultiline(texto)
+                </MudText>
+            </MudCardContent>
+        </MudCard>
+    }
+</div>
 
 @code {
     private bool hidePicker = true;
 
     private DailyNote dailyNote;
     private string texto;
-    private string heightCard = "height: calc(100vh - 86px); ";
+    private string heightCard = "min-height: calc(100vh - 86px); ";
     DateTime? dataSelecionada;
 
     private DateTime newMonth;
@@ -70,7 +75,7 @@ else
             dailyNote = App._notesRepo.dailyNote;
             dataSelecionada = dailyNote.Time;
         }
-        heightCard = "height: calc(100vh - 86px); ";
+        heightCard = "min-height: calc(100vh - 86px); ";
         await ViewNote(dataSelecionada.Value);
     }
 
@@ -79,14 +84,13 @@ else
         this.hidePicker = !hidePicker;
 
         if (hidePicker)
-            heightCard = "height: calc(100vh - 86px)";
+            heightCard = "min-height: calc(100vh - 86px)";
         else
-            heightCard = "height: calc(100vh - 392px)";
+            heightCard = "min-height: calc(100vh - 315px)";
     }
 
     private void ItemClicked(DateTime? data)
     {
-        Debug.WriteLine("Passou aqui");
         dataSelecionada = data.Value;
         App._notesRepo.dailyNote.Time = dataSelecionada.Value;
         _ = ViewNote(dataSelecionada.Value);

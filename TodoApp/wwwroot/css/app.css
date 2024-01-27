@@ -54,9 +54,11 @@ input[type=textarea], .mud-input > textarea.mud-input-root {
 }
 
 .mud-paper {
-    background-color: var(--clr-page-bg) !important;
+    background: none !important;
 }
-
+.mud-card-content{
+    padding:11px;
+}
 @font-face {
     font-family: "EBGaramond";
     src: url('../font/static/EBGaramond-Regular.ttf') format("truetype");
@@ -148,4 +150,7 @@ a, .btn-link {
     display: flex;
     flex-direction: column;
     padding-top: 1.1rem !important;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: space-around;
 }
