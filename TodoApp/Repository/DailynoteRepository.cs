@@ -1,9 +1,11 @@
-﻿using SQLite;
+﻿// Ignore Spelling: App
+
+using SQLite;
 using TodoApp.Data;
 
 namespace TodoApp.Repository
 {
-    public class DailynoteRepositosy
+    public class DailynoteRepository
     {
 
         private string _dbPath;
@@ -23,7 +25,7 @@ namespace TodoApp.Repository
             _ = _conn.CreateTableAsync<DailyNote>();
         }
 
-        public DailynoteRepositosy(string dbPath)
+        public DailynoteRepository(string dbPath)
         {
             _dbPath = dbPath;
         }

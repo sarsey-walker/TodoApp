@@ -29,7 +29,7 @@ public static class MauiProgram
         string dbPath = FileAccessHelper.GetLocalFilePath("todos.db3");
         builder.Services.AddSingleton<TodoRepository>(s => ActivatorUtilities.CreateInstance<TodoRepository>(s, dbPath));
         dbPath = FileAccessHelper.GetLocalFilePath("Dailynotes.db3");
-        builder.Services.AddSingleton<DailynoteRepositosy>(s => ActivatorUtilities.CreateInstance<DailynoteRepositosy>(s, dbPath));
+        builder.Services.AddSingleton<DailynoteRepository>(s => ActivatorUtilities.CreateInstance<DailynoteRepository>(s, dbPath));
 
 #if DEBUG
         builder.Services.AddBlazorWebViewDeveloperTools();

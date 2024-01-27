@@ -6,8 +6,8 @@ public partial class App : Application
 {
     // Add a public static *Repository property
     public static TodoRepository TodoRepo { get; private set; }
-    public static DailynoteRepositosy _notesRepo { get; private set; }
-    public App(TodoRepository repo, DailynoteRepositosy dailynoteRepositosy)
+    public static DailynoteRepository _notesRepo { get; private set; }
+    public App(TodoRepository repo, DailynoteRepository dailynoteRepositosy)
 	{
 		InitializeComponent();
 
