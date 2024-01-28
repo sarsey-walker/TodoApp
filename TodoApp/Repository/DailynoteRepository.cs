@@ -1,6 +1,7 @@
 ﻿// Ignore Spelling: App
 
 using SQLite;
+using System.Diagnostics;
 using TodoApp.Data;
 
 namespace TodoApp.Repository
@@ -117,7 +118,7 @@ namespace TodoApp.Repository
                 // basic validation to ensure a name was entered
                 result = await _conn.UpdateAsync(todo);
 
-                StatusMessage = string.Format("{0} record(s) Updateds", result);
+                StatusMessage = string.Format("{0} record(s) Updated", result);
             }
             catch (Exception ex)
             {
@@ -142,6 +143,29 @@ namespace TodoApp.Repository
                 StatusMessage = string.Format("Failed to delete. Error: {0}", ex.Message);
             }
         }
+        public async Task<IEnumerable<DateTime>> GetDaysWithNotes(DateTime date)
+        {
+            try
+            {
+                Init();
+                var dateIni = new DateTime(date.Year, date.Month, 1);
+                var dateEnd = new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month));
+                var query = _conn.Table<DailyNote>()
+                    .Where(x => x.Time >= dateIni && x.Time <= dateEnd);
+
+                var notes = query.ToListAsync().Result;
+
+                if (!notes.Any())
+                    return new List<DateTime>();
+
+                return notes.Select(y => y.Time);
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = string.Format("Failed to retrieve data. {0}", ex.Message);
+                return null;
+            }
+        } 
 
     }
 }
