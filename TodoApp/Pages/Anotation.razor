@@ -6,6 +6,7 @@
 @using TodoApp.Intefaces;
 @using TodoApp.Views;
 
+@inject IJSRuntime JSRuntime
 @inject NavigationManager NavManager
 
 <NavigationLock  OnBeforeInternalNavigation="OnBeforeInternalNavigation" ConfirmExternalNavigation="true" />
@@ -18,35 +19,31 @@
 
     <WDatePicker Title="Select a date"
                  DateChanged="(data) => ItemClicked(data)"
-                 MonthChanged="@((DateTime? date) => {newMonth = date.Value; dias = new List<DateTime>(){new DateTime(date.Value.Year,date.Value.Month, random.Next(1, 30))};})"
+                 MonthChanged="@((DateTime? date) =>  dias =  GetDaysWithNotes(date.Value).Result)"
                  MarkedDays="@dias"
                  DateFormat="dd/MM/yyyy" />
 
 </div>
 
 
-<div style="background-image: url('images/bg-text.svg');
-    /* background-image: linear-gradient(#6f6f6f 1px, transparent 1px); */
-    background-size: 3px 24px;">
-    @if (string.IsNullOrEmpty(dailyNote.Text))
-    {
-        <MudCard @onclick="OnClickCardClick" Style="@heightCard">
-            <MudCardContent>
-                <MudText>No notes</MudText>
-            </MudCardContent>
-        </MudCard>
-    }
-    else
-    {
-
-        <MudCard @onclick="OnClickCardClick" Style="@heightCard">
-            <MudCardContent>
-                <MudText>
-                    @HtmlHelper.RenderMultiline(texto)
-                </MudText>
-            </MudCardContent>
-        </MudCard>
-    }
+@if (string.IsNullOrEmpty(dailyNote.Text))
+{
+    <MudCard @onclick="OnClickCardClick" Style="@heightCard">
+        <MudCardContent>
+            <MudText>No notes</MudText>
+        </MudCardContent>
+    </MudCard>
+}
+else
+{
+    <MudCard @onclick="OnClickCardClick" Style="@heightCard">
+        <MudCardContent>
+            <MudText>
+                @HtmlHelper.RenderMultiline(texto)
+            </MudText>
+        </MudCardContent>
+    </MudCard>
+}
 @code{
     private async Task OnBeforeInternalNavigation(LocationChangingContext context)
     {
@@ -69,8 +66,7 @@
     private string heightCard = "min-height: calc(100vh - 86px); ";
     DateTime? dataSelecionada;
 
-    private DateTime newMonth;
-    private List<DateTime> dias;
+    private IEnumerable<DateTime> dias;
 
     private Random random = new Random();
 
@@ -90,7 +86,13 @@
             dataSelecionada = dailyNote.Time;
         }
         heightCard = "min-height: calc(100vh - 86px); ";
+        dias = await GetDaysWithNotes(dataSelecionada.Value);
         await ViewNote(dataSelecionada.Value);
+    }
+
+    private async Task<IEnumerable<DateTime>> GetDaysWithNotes(DateTime date)
+    {
+        return await App._notesRepo.GetDaysWithNotes(date);
     }
 
     private void TogglePicker()
@@ -120,7 +122,6 @@
         texto = dailyNote.Text;
         App._notesRepo.dailyNote = dailyNote;
         StateHasChanged();
-
     }
     private async void OnClickCardClick()
     {
