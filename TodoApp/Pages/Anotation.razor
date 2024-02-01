@@ -8,6 +8,8 @@
 
 @inject NavigationManager NavManager
 
+<NavigationLock  OnBeforeInternalNavigation="OnBeforeInternalNavigation" ConfirmExternalNavigation="true" />
+
 <div class="separator">
     <button type="button" @onclick="TogglePicker">@dataSelecionada?.ToString("dd/MM/yyyy")</button>
 </div>
@@ -45,8 +47,20 @@
             </MudCardContent>
         </MudCard>
     }
-</div>
+@code{
+    private async Task OnBeforeInternalNavigation(LocationChangingContext context)
+    {
+        // This just displays the built-in browser confirm dialog, but you can display a custom prompt
+        // for internal navigations if you want.
+        var isConfirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Are you sure you want to continue?");
 
+        if (!isConfirmed)
+        {
+            context.PreventNavigation();
+        }
+
+    }
+}
 @code {
     private bool hidePicker = true;
 
