@@ -54,10 +54,7 @@ input[type=textarea], .mud-input > textarea.mud-input-root {
 }
 
 .mud-paper {
-    background: none !important;
-}
-.mud-card-content{
-    padding:11px;
+    background-color: var(--clr-page-bg) !important;
 }
 @font-face {
     font-family: "EBGaramond";
