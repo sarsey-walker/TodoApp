@@ -6,6 +6,11 @@ Estou evoluindo ele para para um aplicativo de anotações/diário.
 
 # Roadmap
 
+- [ ] Funcionalidade exibir dias com anotações
+- [ ] Implementar criptografia
+- [ ] Adicionar opções de configuração
+	- [ ] Mudar background da anotação
+	- [ ] Mudar tema da aplicação
 - [ ] Finalizar UI
 - [ ] Corrigir bug de quando minimiza
 - [ ] Refatorar
